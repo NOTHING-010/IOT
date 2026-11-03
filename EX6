@@ -1,0 +1,78 @@
+// Lowest and highest sensor readings
+const int sensorMin = 0;
+const int sensorMax = 1024;
+
+const int buzzer = 8;
+const int light = 7;   // Close Fire LED
+const int light1 = 6;  // Distant Fire LED
+const int light2 = 5;  // No Fire LED
+
+void setup()
+{
+    Serial.begin(9600);
+
+    pinMode(buzzer, OUTPUT);
+    pinMode(light, OUTPUT);
+    pinMode(light1, OUTPUT);
+    pinMode(light2, OUTPUT);
+
+    Serial.println("Annamalai University BE CSE 2021");
+    Serial.println("Fire Detection Program");
+    Serial.println("Fire Detection Test!");
+}
+
+void loop()
+{
+    int sensorReading = analogRead(A0);
+
+    int range = map(sensorReading, sensorMin, sensorMax, 0, 3);
+
+    switch (range)
+    {
+        case 0:
+            // Fire very close
+            Serial.println("Close Fire");
+
+            digitalWrite(light, HIGH);
+            digitalWrite(light1, LOW);
+            digitalWrite(light2, LOW);
+
+            tone(buzzer, 1000);
+            delay(1000);
+            noTone(buzzer);
+
+            break;
+
+        case 1:
+            // Fire at moderate distance
+            Serial.println("** Distant Fire **");
+
+            digitalWrite(light1, HIGH);
+            digitalWrite(light, LOW);
+            digitalWrite(light2, LOW);
+
+            break;
+
+        case 2:
+            // No fire detected
+            Serial.println("No Fire");
+
+            digitalWrite(light2, HIGH);
+            digitalWrite(light, LOW);
+            digitalWrite(light1, LOW);
+
+            break;
+
+        case 3:
+            // No fire detected
+            Serial.println("No Fire");
+
+            digitalWrite(light2, HIGH);
+            digitalWrite(light, LOW);
+            digitalWrite(light1, LOW);
+
+            break;
+    }
+
+    delay(1000);
+}
