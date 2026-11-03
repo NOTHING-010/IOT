@@ -1,0 +1,47 @@
+// Arduino Water Level Detection with LED and Buzzer
+
+const int waterSensor = A0;
+const int led = 13;
+const int buzzer = 2;
+
+int sensorValue;
+
+void setup()
+{
+    pinMode(led, OUTPUT);
+    pinMode(buzzer, OUTPUT);
+
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    sensorValue = analogRead(waterSensor);
+
+    Serial.print("Sensor Value: ");
+    Serial.println(sensorValue);
+
+    if (sensorValue < 200)
+    {
+        Serial.println("Water Level: LOW");
+
+        digitalWrite(led, LOW);
+        digitalWrite(buzzer, LOW);
+    }
+    else if (sensorValue >= 200 && sensorValue < 250)
+    {
+        Serial.println("Water Level: MEDIUM");
+
+        digitalWrite(led, HIGH);
+        digitalWrite(buzzer, LOW);
+    }
+    else
+    {
+        Serial.println("Water Level: HIGH");
+
+        digitalWrite(led, HIGH);
+        digitalWrite(buzzer, HIGH);
+    }
+
+    delay(1000);
+}
