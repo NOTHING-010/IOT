@@ -1,0 +1,31 @@
+#define FORCE_SENSOR_PIN A0
+
+void setup()
+{
+    Serial.begin(9600);
+}
+
+void loop()
+{
+    int analogReading = analogRead(FORCE_SENSOR_PIN);
+
+    Serial.print("Force Sensor Reading = ");
+    Serial.print(analogReading);
+
+    if (analogReading < 10)
+        Serial.println(" -> No Pressure");
+
+    else if (analogReading < 200)
+        Serial.println(" -> Light Touch");
+
+    else if (analogReading < 500)
+        Serial.println(" -> Light Pressure");
+
+    else if (analogReading < 800)
+        Serial.println(" -> Medium Pressure");
+
+    else
+        Serial.println(" -> Big Pressure");
+
+    delay(1000);
+}
